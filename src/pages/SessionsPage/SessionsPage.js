@@ -23,7 +23,7 @@ export default function SessionsPage() {
     }, [])
   
     if (image.length === 0) {
-      return <img src={"https://serravelha.com.br/images/loader.gif"} alt="loading" />
+      return <SessionContainer><img src={"https://serravelha.com.br/images/loader.gif"} alt="loading" /></SessionContainer>
     }
 
     return (

@@ -22,7 +22,7 @@ export default function HomePage() {
     }, [])
   
     if (imagens.length === 0) {
-      return <img src={"https://serravelha.com.br/images/loader.gif"} alt="carregando" />
+      return <ListContainer><img src={"https://serravelha.com.br/images/loader.gif"} alt="carregando" /></ListContainer>
     }
   
     return (

@@ -1,18 +1,34 @@
 import styled from "styled-components"
 import axios from "axios"
+import {useEffect, useState } from "react"
+import { useParams } from 'react-router-dom';
 
 export default function SeatsPage() {
+    const [seats, setSeats] = useState([])
+    const { idSessao } = useParams()
+    const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
+    useEffect(() => {
+        const promise = axios.get(url)
+        promise.then((res) => {
+            setSeats(res.data)
+            console.log(res.data)
+        })
+
+        promise.catch(err => console.log(err.response.data))
+    }, [])
+
+    if (seats.length === 0) {
+        return <PageContainer><img src={"https://serravelha.com.br/images/loader.gif"} alt="loading" /></PageContainer>
+    }
 
     return (
         <PageContainer>
             Selecione o(s) assento(s)
 
             <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
+            {seats.seats.map((assento) => (
+                <SeatItem>{assento.name}</SeatItem>
+                ))}
             </SeatsContainer>
 
             <CaptionContainer>
