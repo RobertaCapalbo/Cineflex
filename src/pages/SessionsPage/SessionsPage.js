@@ -35,7 +35,7 @@ export default function SessionsPage() {
                 <SessionContainer>
                     {img.weekday} - {img.date}
                     <ButtonsContainer key={img.id}>
-                    {img.showtimes.map((horario)=><Link to={`/assentos/${img.id}`} key={img.id}><button>{horario.name}</button></Link>)}
+                    {img.showtimes.map((horario)=><Link to={`/assentos/${horario.id}`} key={horario.id}><button>{horario.name}</button></Link>)}
                     </ButtonsContainer>
                 </SessionContainer>
             ))}

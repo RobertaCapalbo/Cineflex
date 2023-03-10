@@ -27,21 +27,21 @@ export default function SeatsPage() {
 
             <SeatsContainer>
             {seats.seats.map((assento) => (
-                <SeatItem>{assento.name}</SeatItem>
+                <SeatItem key={seats.id} isAvailable={assento.isAvailable}>{assento.name}</SeatItem>
                 ))}
             </SeatsContainer>
 
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircleS />
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircleD />
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircleI />
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
@@ -112,9 +112,9 @@ const CaptionContainer = styled.div`
     justify-content: space-between;
     margin: 20px;
 `
-const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+const CaptionCircleS = styled.div`
+    border: #0E7D71;      
+    background-color: #1AAE9E;
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -122,6 +122,32 @@ const CaptionCircle = styled.div`
     align-items: center;
     justify-content: center;
     margin: 5px 3px;
+    
+`
+
+const CaptionCircleD = styled.div`
+    border: #7B8B99;
+    background-color: #C3CFD9;
+    height: 25px;
+    width: 25px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 3px;
+    
+`
+const CaptionCircleI = styled.div`
+    border: #F7C52B; 
+    background-color: #FBE192;
+    height: 25px;
+    width: 25px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 5px 3px;
+    
 `
 const CaptionItem = styled.div`
     display: flex;
@@ -130,8 +156,8 @@ const CaptionItem = styled.div`
     font-size: 12px;
 `
 const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: ${(props) => (props.isAvailable ? '#7B8B99' : '#F7C52B')};
+    background-color:  ${(props) => (props.isAvailable ? '#C3CFD9' : '#F7C52B')};
     height: 25px;
     width: 25px;
     border-radius: 25px;
