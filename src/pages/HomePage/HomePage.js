@@ -22,7 +22,7 @@ export default function HomePage() {
     }, [])
   
     if (imagens.length === 0) {
-      return <img src={"https://i.pinimg.com/originals/71/3a/32/713a3272124cc57ba9e9fb7f59e9ab3b.gif"} alt="carregando" />
+      return <img src={"https://serravelha.com.br/images/loader.gif"} alt="carregando" />
     }
   
     return (

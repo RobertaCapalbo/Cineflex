@@ -2,6 +2,7 @@ import styled from "styled-components"
 import axios from "axios"
 import {useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
+import { Link } from "react-router-dom"
 
 
 export default function SessionsPage() {
@@ -11,13 +12,18 @@ export default function SessionsPage() {
     useEffect(() => {
       const url = `https://mock-api.driven.com.br/api/v8/cineflex/movies/${idFilme}/showtimes`
       const promise = axios.get(url)
-      promise.then(res => setImage(res.data))
-      promise.catch(err => console.log(err.respose.data))
+      promise.then((res) => {
+        setImage(res.data)
+        console.log(res.data)
+      })
   
+      promise.catch((err) => {
+        console.log(err.response.data)
+      })
     }, [])
   
-    if (image === undefined) {
-      return <img src={"https://cdn.dribbble.com/users/4241225/screenshots/14521747/media/d9d6f50e1443ecbdef32497685c0b5eb.gif"} alt="loading" />
+    if (image.length === 0) {
+      return <img src={"https://serravelha.com.br/images/loader.gif"} alt="loading" />
     }
 
     return (
@@ -25,12 +31,11 @@ export default function SessionsPage() {
             Selecione o horário
             
          <div>
-            {image.map((img) => (
+            {image.days.map((img) => (
                 <SessionContainer>
-                    {img.weekday} + '-' + {img.date}
+                    {img.weekday} - {img.date}
                     <ButtonsContainer key={img.id}>
-                        <button>{img.name}</button>
-                        <button>{img.name}</button>
+                    {img.showtimes.map((horario)=><Link to={`/assentos/${img.id}`} key={img.id}><button>{horario.name}</button></Link>)}
                     </ButtonsContainer>
                 </SessionContainer>
             ))}
