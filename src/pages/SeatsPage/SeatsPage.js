@@ -2,16 +2,17 @@ import styled from "styled-components"
 import axios from "axios"
 import {useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
+import Seat from "./Seat";
 
 export default function SeatsPage() {
     const [seats, setSeats] = useState([])
     const { idSessao } = useParams()
+    const chosenSeats = [] 
     const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
     useEffect(() => {
         const promise = axios.get(url)
         promise.then((res) => {
             setSeats(res.data)
-            console.log(res.data)
         })
 
         promise.catch(err => console.log(err.response.data))
@@ -27,7 +28,7 @@ export default function SeatsPage() {
 
             <SeatsContainer>
             {seats.seats.map((assento) => (
-                <SeatItem key={seats.id} isAvailable={assento.isAvailable}>{assento.name}</SeatItem>
+               <Seat key={assento.id} assento={assento} chosenSeats={chosenSeats}></Seat>
                 ))}
             </SeatsContainer>
 
@@ -154,19 +155,6 @@ const CaptionItem = styled.div`
     flex-direction: column;
     align-items: center;
     font-size: 12px;
-`
-const SeatItem = styled.div`
-    border: ${(props) => (props.isAvailable ? '#7B8B99' : '#F7C52B')};
-    background-color:  ${(props) => (props.isAvailable ? '#C3CFD9' : '#F7C52B')};
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    font-family: 'Roboto';
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
 `
 const FooterContainer = styled.div`
     width: 100%;
