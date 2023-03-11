@@ -3,11 +3,15 @@ import axios from "axios"
 import {useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
 import Seat from "./Seat";
+import { useNavigate } from "react-router-dom"
 
-export default function SeatsPage() {
+export default function SeatsPage(finalizarPedido) {
     const [seats, setSeats] = useState([])
     const { idSessao } = useParams()
-    const chosenSeats = [] 
+    const chosenSeats = []
+    const [nome, setNome] = useState("")
+    const [cpf, setCpf] = useState("") 
+    const navigate = useNavigate()
     const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
     useEffect(() => {
         const promise = axios.get(url)
@@ -21,6 +25,24 @@ export default function SeatsPage() {
     if (seats.length === 0) {
         return <PageContainer><img src={"https://serravelha.com.br/images/loader.gif"} alt="loading" /></PageContainer>
     }
+
+        function finalizarCompra (event) {
+            event.preventDefault();
+
+            const informacoesFinais = {
+                ids: chosenSeats,
+                name: nome,
+                cpf: cpf,
+                titulo: seats.movie.title,
+                dia: seats.day.weekday,
+                horario: seats.name
+            }
+    
+            const promisse = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", informacoesFinais)
+            promisse.then(() => navigate("/sucesso"))
+    
+        }
+
 
     return (
         <PageContainer>
@@ -46,24 +68,26 @@ export default function SeatsPage() {
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
-
+      
             <FormContainer>
+            <form onSubmit={finalizarCompra}>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
+                <input placeholder="Digite seu nome..." type="text" value={nome} onChange={info => setNome(info.target.value)} required/>
 
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
+                <input placeholder="Digite seu CPF..." type="text" value={cpf} onChange={info => setCpf(info.target.value)} required/>
 
-                <button>Reservar Assento(s)</button>
+                <button type="submit">Reservar Assento(s)</button>
+            </form>    
             </FormContainer>
 
             <FooterContainer>
                 <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
+                    <img src={seats.movie.posterURL} alt="poster" />
                 </div>
                 <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                    <p>Sexta - 14h00</p>
+                    <p>{seats.movie.title}</p>
+                    <p>{seats.day.weekday} - {seats.name}</p>
                 </div>
             </FooterContainer>
 
