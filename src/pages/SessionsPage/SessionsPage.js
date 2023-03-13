@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from "react-router-dom"
 
 
-export default function SessionsPage() {
+export default function SessionsPage({title, setTitle}) {
     const [image, setImage] = useState([])
     const { idFilme } = useParams()
   
@@ -14,6 +14,7 @@ export default function SessionsPage() {
       const promise = axios.get(url)
       promise.then((res) => {
         setImage(res.data)
+        setTitle(res.data.title)
         console.log(res.data)
       })
   

@@ -4,17 +4,47 @@ import SeatsPage from "./pages/SeatsPage/SeatsPage"
 import SessionsPage from "./pages/SessionsPage/SessionsPage"
 import SuccessPage from "./pages/SuccessPage/SuccessPage"
 import { BrowserRouter, Routes, Route } from "react-router-dom"
+import {useEffect, useState } from "react"
+
 
 export default function App() {
+    const [cpf, setCPF] = useState("")
+    const [nome, setNome] = useState("")
+    const chosenSeats = []
+    const [title, setTitle] = useState("")
+    const [day, setDay] = useState("")
+    const [time, setTime] = useState("")
     return (
         <BrowserRouter>
            <NavContainer>CINEFLEX</NavContainer>
 
             <Routes>
               <Route path="/" element={<HomePage />}/>
-              <Route path="/assentos/:idSessao" element={<SeatsPage />}/>
-              <Route path="/sessoes/:idFilme" element={<SessionsPage />}/>
-              <Route path="/sucesso" element={<SuccessPage />}/>
+              <Route path="/assentos/:idSessao" element={<SeatsPage 
+                    cpf={cpf}
+                    setCPF={setCPF}
+                    nome={nome}
+                    setNome={setNome}
+                    chosenSeats={chosenSeats}
+                    setTime={setTime}
+                    day={day}
+                    setDay={setDay}
+                    time={time}/>}/>
+              <Route path="/sessoes/:idFilme" element={<SessionsPage 
+                    setTitle={setTitle}
+                    title={title}/>}/>
+              <Route path="/sucesso" element={<SuccessPage 
+                    cpf={cpf}
+                    setCPF={setCPF}
+                    nome={nome}
+                    setNome={setNome}
+                    chosenSeats={chosenSeats}
+                    setTitle={setTitle}
+                    title={title}
+                    setTime={setTime}
+                    day={day}
+                    setDay={setDay}
+                    time={time}/>}/>
             </Routes>
 
         </BrowserRouter>

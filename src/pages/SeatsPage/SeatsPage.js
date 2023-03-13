@@ -5,18 +5,17 @@ import { useParams } from 'react-router-dom';
 import Seat from "./Seat";
 import { useNavigate } from "react-router-dom"
 
-export default function SeatsPage(finalizarPedido) {
+export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, time, setTime, day, setDay}) {
     const [seats, setSeats] = useState([])
     const { idSessao } = useParams()
-    const chosenSeats = []
-    const [nome, setNome] = useState("")
-    const [cpf, setCpf] = useState("") 
     const navigate = useNavigate()
     const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
     useEffect(() => {
         const promise = axios.get(url)
         promise.then((res) => {
             setSeats(res.data)
+            setDay(res.data.day.date)
+            setTime(res.data.name)
         })
 
         promise.catch(err => console.log(err.response.data))
@@ -33,9 +32,6 @@ export default function SeatsPage(finalizarPedido) {
                 ids: chosenSeats,
                 name: nome,
                 cpf: cpf,
-                titulo: seats.movie.title,
-                dia: seats.day.weekday,
-                horario: seats.name
             }
     
             const promisse = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", informacoesFinais)
@@ -72,10 +68,10 @@ export default function SeatsPage(finalizarPedido) {
             <FormContainer>
             <form onSubmit={finalizarCompra}>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." type="text" value={nome} onChange={info => setNome(info.target.value)} required/>
+                <input placeholder="Digite seu nome..." type="text" value={nome} onChange={(event) => setNome(event.target.value)} required/>
 
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." type="text" value={cpf} onChange={info => setCpf(info.target.value)} required/>
+                <input placeholder="Digite seu CPF..." type="text" value={cpf} onChange={(event) => setCPF(event.target.value)} required/>
 
                 <button type="submit">Reservar Assento(s)</button>
             </form>    

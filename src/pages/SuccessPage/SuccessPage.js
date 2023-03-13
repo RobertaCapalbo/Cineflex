@@ -4,7 +4,7 @@ import {useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom"
 
-export default function SuccessPage({name, cpf, ids, titulo, dia, horario}) {
+export default function SuccessPage({nome, cpf, chosenSeats, titulo, dia, horario, title, time, setTime, day, setDay}) {
     const navigate = useNavigate()
 
     function returnHomePage() {
@@ -17,20 +17,18 @@ export default function SuccessPage({name, cpf, ids, titulo, dia, horario}) {
 
             <TextContainer>
                 <strong><p>Filme e sessão</p></strong>
-                <p>{titulo}</p>
-                <p>{dia} - {horario}</p>
+                <p>{title}</p>
+                <p>{day} - {time}</p>
             </TextContainer>
 
             <TextContainer>
                 <strong><p>Ingressos</p></strong>
-                <p>Assento 01</p>
-                <p>Assento 02</p>
-                <p>Assento 03</p>
+                {chosenSeats.map((numeroAssento) => <p key={numeroAssento} >Assento {numeroAssento}</p>)}
             </TextContainer>
 
             <TextContainer>
                 <strong><p>Comprador</p></strong>
-                <p>Nome: {name}</p>
+                <p>Nome: {nome}</p>
                 <p>CPF: {cpf}</p>
             </TextContainer>
 
