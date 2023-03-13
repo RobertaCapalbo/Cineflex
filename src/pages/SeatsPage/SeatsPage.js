@@ -44,7 +44,7 @@ export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, time
         <PageContainer>
             Selecione o(s) assento(s)
 
-            <SeatsContainer>
+            <SeatsContainer data-test="seat">
             {seats.seats.map((assento) => (
                <Seat key={assento.id} assento={assento} chosenSeats={chosenSeats}></Seat>
                 ))}
@@ -68,16 +68,16 @@ export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, time
             <FormContainer>
             <form onSubmit={finalizarCompra}>
                 Nome do Comprador:
-                <input placeholder="Digite seu nome..." type="text" value={nome} onChange={(event) => setNome(event.target.value)} required/>
+                <input data-test="client-name" placeholder="Digite seu nome..." type="text" value={nome} onChange={(event) => setNome(event.target.value)} required/>
 
                 CPF do Comprador:
-                <input placeholder="Digite seu CPF..." type="text" value={cpf} onChange={(event) => setCPF(event.target.value)} required/>
+                <input data-test="client-cpf" placeholder="Digite seu CPF..." type="text" value={cpf} onChange={(event) => setCPF(event.target.value)} required/>
 
-                <button type="submit">Reservar Assento(s)</button>
+                <button data-test="book-seat-btn" type="submit">Reservar Assento(s)</button>
             </form>    
             </FormContainer>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={seats.movie.posterURL} alt="poster" />
                 </div>

@@ -8,6 +8,8 @@ export default function Seat({assento, chosenSeats}) {
     const [isSelected, setIsSelected] = useState(null)
 
     function selectSeat(assento){
+        if(assento.isAvailable === 
+            false){return}
         if(chosenSeats.includes(assento.name)){
             const index = chosenSeats.indexOf(assento.id)
             chosenSeats.splice(index,1)
