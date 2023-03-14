@@ -10,8 +10,7 @@ import {useEffect, useState } from "react"
 export default function App() {
     const [cpf, setCPF] = useState("")
     const [nome, setNome] = useState("")
-    let chosenSeats = []
-    // let seatsIDS = []
+    const [chosenSeats, setChosenSeats] = useState([])
     const [seatsIds, setSeatsIds] = useState([])
     const [title, setTitle] = useState("")
     const [day, setDay] = useState("")
@@ -34,7 +33,9 @@ export default function App() {
                     setDay={setDay}
                     time={time}
                     setSeatsIds={setSeatsIds}
-                    seatsIds={seatsIds}/>}/>
+                    seatsIds={seatsIds}
+                    setChosenSeats={setChosenSeats}
+                    />}/>
               <Route path="/sessoes/:idFilme" element={<SessionsPage 
                     setTitle={setTitle}
                     title={title}/>}/>
@@ -52,6 +53,7 @@ export default function App() {
                     time={time}
                     setSeatsIds={setSeatsIds}
                     seatsIds={seatsIds}
+                    setChosenSeats={setChosenSeats}
                     />}/>
             </Routes>
 

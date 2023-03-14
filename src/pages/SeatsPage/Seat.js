@@ -4,7 +4,7 @@ import {useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
 
 
-export default function Seat({assento, chosenSeats, seatsIds, setSeatsIds}) {
+export default function Seat({assento, chosenSeats, seatsIds, setSeatsIds, setChosenSeats}) {
     const [isSelected, setIsSelected] = useState(null)
 
 
@@ -23,10 +23,8 @@ export default function Seat({assento, chosenSeats, seatsIds, setSeatsIds}) {
         } 
         else {
             chosenSeats.push(assento.name)
-            chosenSeats.sort()
-            console.log(seatsIds)
+            chosenSeats.sort((a,b) => a - b)
             setSeatsIds([...seatsIds, assento.id])
-            console.log(seatsIds)
             setIsSelected(assento.id)
         }
     }

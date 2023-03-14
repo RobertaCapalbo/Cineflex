@@ -4,7 +4,7 @@ import {useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom"
 
-export default function SuccessPage({nome, cpf, chosenSeats, title, time, setTime, day, setDay, setTitle, setCPF, setNome, setSeatsIds, seatsIds}) {
+export default function SuccessPage({nome, cpf, chosenSeats, title, time, setTime, day, setDay, setTitle, setCPF, setNome, setChosenSeats}) {
     const navigate = useNavigate()
 
     function returnHome() {
@@ -13,6 +13,7 @@ export default function SuccessPage({nome, cpf, chosenSeats, title, time, setTim
         setTitle("")
         setCPF("")
         setNome("")
+        setChosenSeats([])
         navigate("/")
     }
 

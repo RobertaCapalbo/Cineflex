@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Seat from "./Seat";
 import { useNavigate } from "react-router-dom"
 
-export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, setTime, setDay, setSeatsIds, seatsIds}) {
+export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, setTime, setDay, setSeatsIds, seatsIds, setChosenSeats}) {
     const [seats, setSeats] = useState([])
     const { idSessao } = useParams()
     const navigate = useNavigate()
@@ -37,7 +37,6 @@ export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, setT
             console.log(informacoesFinais)
             try {
                 await axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", informacoesFinais)
-                console.log("try")
                 navigate("/sucesso")
             } catch (error) {
                 console.log(error)
@@ -51,7 +50,7 @@ export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, setT
 
             <SeatsContainer data-test="seat">
             {seats.seats.map((assento) => (
-               <Seat seatsIds={seatsIds} setSeatsIds={setSeatsIds} key={assento.id} assento={assento} chosenSeats={chosenSeats}></Seat>
+               <Seat setChosenSeats={setChosenSeats} seatsIds={seatsIds} setSeatsIds={setSeatsIds} key={assento.id} assento={assento} chosenSeats={chosenSeats}></Seat>
                 ))}
             </SeatsContainer>
 
