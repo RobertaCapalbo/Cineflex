@@ -10,10 +10,13 @@ import {useEffect, useState } from "react"
 export default function App() {
     const [cpf, setCPF] = useState("")
     const [nome, setNome] = useState("")
-    const chosenSeats = []
+    let chosenSeats = []
+    // let seatsIDS = []
+    const [seatsIds, setSeatsIds] = useState([])
     const [title, setTitle] = useState("")
     const [day, setDay] = useState("")
     const [time, setTime] = useState("")
+    
     return (
         <BrowserRouter>
            <NavContainer>CINEFLEX</NavContainer>
@@ -29,7 +32,9 @@ export default function App() {
                     setTime={setTime}
                     day={day}
                     setDay={setDay}
-                    time={time}/>}/>
+                    time={time}
+                    setSeatsIds={setSeatsIds}
+                    seatsIds={seatsIds}/>}/>
               <Route path="/sessoes/:idFilme" element={<SessionsPage 
                     setTitle={setTitle}
                     title={title}/>}/>
@@ -44,7 +49,10 @@ export default function App() {
                     setTime={setTime}
                     day={day}
                     setDay={setDay}
-                    time={time}/>}/>
+                    time={time}
+                    setSeatsIds={setSeatsIds}
+                    seatsIds={seatsIds}
+                    />}/>
             </Routes>
 
         </BrowserRouter>

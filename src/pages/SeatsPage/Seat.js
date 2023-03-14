@@ -4,27 +4,36 @@ import {useEffect, useState } from "react"
 import { useParams } from 'react-router-dom';
 
 
-export default function Seat({assento, chosenSeats}) {
+export default function Seat({assento, chosenSeats, seatsIds, setSeatsIds}) {
     const [isSelected, setIsSelected] = useState(null)
 
-    function selectSeat(assento){
-        if(assento.isAvailable === 
-            false){return}
+
+    function selectSeat(e, assento){
+        e.stopPropagation()
+        console.log(assento)
+        if(assento.isAvailable === false){
+            return
+            }
         if(chosenSeats.includes(assento.name)){
-            const index = chosenSeats.indexOf(assento.id)
+            const index = chosenSeats.indexOf(assento.name)
             chosenSeats.splice(index,1)
+            const indexIDS = seatsIds.indexOf(assento.id)
+            setSeatsIds(seatsIds.splice(indexIDS,1))
             setIsSelected(null)
-            console.log(chosenSeats)
-        } else {
+        } 
+        else {
             chosenSeats.push(assento.name)
+            chosenSeats.sort()
+            console.log(seatsIds)
+            setSeatsIds([...seatsIds, assento.id])
+            console.log(seatsIds)
             setIsSelected(assento.id)
-            console.log(chosenSeats)
         }
     }
 
     return (
      <>
-     <SeatItem onClick={() => {selectSeat(assento)}} isSelected={isSelected} isAvailable={assento.isAvailable}>{assento.name}</SeatItem>
+     <SeatItem onClick={(e) => {selectSeat(e, assento)}} isSelected={isSelected} isAvailable={assento.isAvailable}>{assento.name}</SeatItem>
      </>
     )
 }

@@ -15,7 +15,6 @@ export default function SessionsPage({title, setTitle}) {
       promise.then((res) => {
         setImage(res.data)
         setTitle(res.data.title)
-        console.log(res.data)
       })
   
       promise.catch((err) => {

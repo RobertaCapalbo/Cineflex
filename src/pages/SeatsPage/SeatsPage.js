@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Seat from "./Seat";
 import { useNavigate } from "react-router-dom"
 
-export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, time, setTime, day, setDay}) {
+export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, setTime, setDay, setSeatsIds, seatsIds}) {
     const [seats, setSeats] = useState([])
     const { idSessao } = useParams()
     const navigate = useNavigate()
@@ -15,7 +15,7 @@ export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, time
         promise.then((res) => {
             setSeats(res.data)
             setDay(res.data.day.date)
-            setTime(res.data.name)
+            setTime(res.data.name)    
         })
 
         promise.catch(err => console.log(err.response.data))
@@ -25,20 +25,25 @@ export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, time
         return <PageContainer><img src={"https://serravelha.com.br/images/loader.gif"} alt="loading" /></PageContainer>
     }
 
-        function finalizarCompra (event) {
+        async function finalizarCompra (event) {
             event.preventDefault();
 
             const informacoesFinais = {
-                ids: chosenSeats,
+                ids: seatsIds,
                 name: nome,
                 cpf: cpf,
             }
-    
-            const promisse = axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", informacoesFinais)
-            promisse.then(() => navigate("/sucesso"))
+     
+            console.log(informacoesFinais)
+            try {
+                await axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", informacoesFinais)
+                console.log("try")
+                navigate("/sucesso")
+            } catch (error) {
+                console.log(error)
+            }
     
         }
-
 
     return (
         <PageContainer>
@@ -46,7 +51,7 @@ export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, time
 
             <SeatsContainer data-test="seat">
             {seats.seats.map((assento) => (
-               <Seat key={assento.id} assento={assento} chosenSeats={chosenSeats}></Seat>
+               <Seat seatsIds={seatsIds} setSeatsIds={setSeatsIds} key={assento.id} assento={assento} chosenSeats={chosenSeats}></Seat>
                 ))}
             </SeatsContainer>
 
