@@ -10,7 +10,16 @@ export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, setT
     const { idSessao } = useParams()
     const navigate = useNavigate()
     const url = `https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${idSessao}/seats`
+
+    function resetState() {
+        setChosenSeats([]);
+        setSeatsIds([]);
+        setCPF([]);
+        setNome([]);
+      }
+
     useEffect(() => {
+        window.addEventListener("popstate", resetState);
         const promise = axios.get(url)
         promise.then((res) => {
             setSeats(res.data)
@@ -27,6 +36,14 @@ export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, setT
 
         async function finalizarCompra (event) {
             event.preventDefault();
+
+            if(cpf.length<11||cpf.length>11){
+            return alert("O CPF deve ter 11 dígitos")
+            }
+
+            if(seatsIds.length === 0){
+                return alert("Você deve selecionar ao menos um (1) assento")
+                }
 
             const informacoesFinais = {
                 ids: seatsIds,
@@ -75,7 +92,7 @@ export default function SeatsPage({cpf, setCPF, nome, setNome, chosenSeats, setT
                 <input data-test="client-name" placeholder="Digite seu nome..." type="text" value={nome} onChange={(event) => setNome(event.target.value)} required/>
 
                 CPF do Comprador:
-                <input data-test="client-cpf" placeholder="Digite seu CPF..." type="text" value={cpf} onChange={(event) => setCPF(event.target.value)} required/>
+                <input data-test="client-cpf" placeholder="Digite seu CPF..." type="text" maxLength={11} value={cpf} onChange={(event) => setCPF(event.target.value)} required/>
 
                 <button data-test="book-seat-btn" type="submit">Reservar Assento(s)</button>
             </form>    

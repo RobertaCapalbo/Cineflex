@@ -18,7 +18,7 @@ export default function Seat({assento, chosenSeats, seatsIds, setSeatsIds, setCh
             const index = chosenSeats.indexOf(assento.name)
             chosenSeats.splice(index,1)
             const indexIDS = seatsIds.indexOf(assento.id)
-            setSeatsIds(seatsIds.splice(indexIDS,1))
+            seatsIds.splice(indexIDS,1)
             setIsSelected(null)
         } 
         else {
